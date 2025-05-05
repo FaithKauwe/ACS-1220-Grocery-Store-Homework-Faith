@@ -1,21 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <h1>New Store</h1>
 
-<form method="POST">
-    <fieldset>
-        <legend>Please enter your information:</legend>
-
-
-
-        <!-- TODO: Remove the next paragraph and use the `form` object passed in 
-            from the route to render a form. -->
-        <p><em>Form fields go here!</em></p>
-
-        <input type="submit" value="Submit">
-    </fieldset>
-</form>
-
+{% set form_title = 'Please enter your information:' %}
+{% include 'partials/store_form.html' %}
 
 {% endblock %}

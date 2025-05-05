@@ -1,0 +1,35 @@
+<!-- Store form partial template -->
+<form method="POST">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>{{ form_title }}</legend>
+        
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(class="form-control") }}
+            
+            {% if form.title.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.title.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.address.label }}
+            {{ form.address(class="form-control") }}
+            
+            {% if form.address.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.address.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        {{ form.submit(class="btn btn-primary") }}
+    </fieldset>
+</form>
