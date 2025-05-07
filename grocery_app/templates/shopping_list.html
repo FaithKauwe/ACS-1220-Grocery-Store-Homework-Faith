@@ -1,35 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <h1>Your Shopping List</h1>
-
 {% if shopping_list_items %}
 <table>
-    <thead>
-        <tr>
-            <th>Item Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Store</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in shopping_list_items %}
-        <tr>
-            <td>
-                <a href="{{ url_for('main.item_detail', item_id=item.id) }}">{{ item.name }}</a>
-            </td>
-            <td>${{ item.price }}</td>
-            <td>{{ item.category.name }}</td>
-            <td>
-                <a href="{{ url_for('main.store_detail', store_id=item.store.id) }}">{{ item.store.title }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+<thead>
+<tr>
+<th>Item Name</th>
+<th>Price</th>
+<th>Category</th>
+<th>Store</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+ {% for item in shopping_list_items %}
+<tr>
+<td>
+<a href="{{ url_for('main.item_detail', item_id=item.id) }}">{{ item.name }}</a>
+</td>
+<td>${{ item.price }}</td>
+<td>{{ item.category.name }}</td>
+<td>
+<a href="{{ url_for('main.store_detail', store_id=item.store.id) }}">{{ item.store.title }}</a>
+</td>
+<td>
+<form method="POST" action="{{ url_for('main.remove_from_shopping_list', item_id=item.id) }}">
+<input type="submit" value="Remove">
+</form>
+</td>
+</tr>
+ {% endfor %}
+</tbody>
 </table>
 {% else %}
 <p>Your shopping list is empty. Add items from the item detail pages.</p>
 {% endif %}
-
 {% endblock %}

@@ -133,6 +133,23 @@ def add_to_shopping_list(item_id):
     flash(f"{item.name} added to your shopping list!")
     return redirect(url_for('main.item_detail', item_id=item_id))
 
+@main.route('/remove_from_shopping_list/<item_id>', methods=['POST'])
+@login_required
+def remove_from_shopping_list(item_id):
+    # Get the item by ID
+    item = GroceryItem.query.get(item_id)
+    
+    if item in current_user.shopping_list_items:
+        # Remove the item from the user's shopping list
+        current_user.shopping_list_items.remove(item)
+        db.session.commit()
+        flash('Item removed from your shopping list!')
+    else:
+        flash('Item not in your shopping list!')
+    
+    # Redirect back to shopping list
+    return redirect(url_for('main.shopping_list'))
+
 @main.route('/shopping_list')
 @login_required
 def shopping_list():

@@ -9,10 +9,19 @@
 <p><strong>Price:</strong> ${{ "%.2f"|format(item.price) }}</p>
 <p><strong>Category:</strong> {{ item.category }}</p>
 <p><strong>Store:</strong> <a href="{{ url_for('main.store_detail', store_id=item.store.id) }}">{{ item.store.title }}</a></p>
+<p><strong>Created by:</strong> {{ item.created_by.username }}</p>
+
+{% if current_user.is_authenticated %}
+    {% if item not in current_user.shopping_list_items %}
+    <form method="POST" action="{{ url_for('main.add_to_shopping_list', item_id=item.id) }}">
+        <input type="submit" value="Add to Shopping List">
+    </form>
+    {% else %}
+    <p>This item is already in your shopping list!</p>
+    {% endif %}
+{% endif %}
 
 <h2>Edit Item</h2>
-
 {% set form_title = 'Please enter your information:' %}
 {% include 'partials/item_form.html' %}
-
 {% endblock %}
